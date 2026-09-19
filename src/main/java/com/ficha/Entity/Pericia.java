@@ -1,4 +1,4 @@
-package com.ficha.ficha.Entity;
+package com.ficha.Entity;
 
 import jakarta.persistence.*;
 

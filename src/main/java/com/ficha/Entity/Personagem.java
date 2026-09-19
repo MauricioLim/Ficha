@@ -1,14 +1,15 @@
-package com.ficha.ficha.Entity;
+package com.ficha.Entity;
 
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "personagem")
 public class Personagem {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,45 @@ public class Personagem {
 
     @OneToMany(mappedBy = "personagem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PersonagemPericia> pericias = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "personagem_protecao", joinColumns = @JoinColumn(name = "id_per"),
+            inverseJoinColumns = @JoinColumn(name = "id_protecao"))
+    private Set<Protecao> protecoes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "personagem_resistencia", joinColumns = @JoinColumn(name = "id_per"),
+            inverseJoinColumns = @JoinColumn(name = "id_res"))
+    private Set<Resistencia> resistencias = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "personagem_proficiencia", joinColumns = @JoinColumn(name = "id_per"),
+            inverseJoinColumns = @JoinColumn(name = "id_proe"))
+    private Set<Proficiencia> proficiencias = new HashSet<>();
+
+    public Set<Protecao> getProtecoes() {
+        return protecoes;
+    }
+
+    public void setProtecoes(Set<Protecao> protecoes) {
+        this.protecoes = protecoes;
+    }
+
+    public Set<Resistencia> getResistencias() {
+        return resistencias;
+    }
+
+    public void setResistencias(Set<Resistencia> resistencias) {
+        this.resistencias = resistencias;
+    }
+
+    public Set<Proficiencia> getProficiencias() {
+        return proficiencias;
+    }
+
+    public void setProficiencias(Set<Proficiencia> proficiencias) {
+        this.proficiencias = proficiencias;
+    }
 
     public List<PersonagemPericia> getPericias() {
         return pericias;
@@ -177,6 +217,4 @@ public class Personagem {
     public void setEsquiva(int esquiva) {
         this.esquiva = esquiva;
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.ficha.ficha.Entity;
+package com.ficha.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -7,19 +7,20 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class PersonagemAtributoId implements Serializable {
+public class PersonagemPericiaId implements Serializable {
+
     @Column(name = "id_per")
     private Integer idPer;
 
-    @Column(name = "id_atri")
-    private Integer idAtri;
+    @Column(name = "per_id")
+    private Integer perId;
 
-    public PersonagemAtributoId() {
+    public PersonagemPericiaId() {
     }
 
-    public PersonagemAtributoId(Integer idPer, Integer idAtri) {
+    public PersonagemPericiaId(Integer idPer, Integer perId) {
         this.idPer = idPer;
-        this.idAtri = idAtri;
+        this.perId = perId;
     }
 
     public Integer getIdPer() {
@@ -30,12 +31,12 @@ public class PersonagemAtributoId implements Serializable {
         this.idPer = idPer;
     }
 
-    public Integer getIdAtri() {
-        return idAtri;
+    public Integer getPerId() {
+        return perId;
     }
 
-    public void setIdAtri(Integer idAtri) {
-        this.idAtri = idAtri;
+    public void setPerId(Integer perId) {
+        this.perId = perId;
     }
 
     @Override
@@ -43,16 +44,15 @@ public class PersonagemAtributoId implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PersonagemAtributoId that)){
+        if (!(o instanceof PersonagemPericiaId that)){
             return false;
         }
 
-        return Objects.equals(idPer, that.idPer) && Objects.equals(idAtri, that.idAtri);
+        return Objects.equals(idPer, that.idPer) && Objects.equals(perId, that.perId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPer, idAtri);
+        return Objects.hash(idPer, perId);
     }
-
 }

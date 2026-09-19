@@ -1,25 +1,25 @@
-package com.ficha.ficha.Entity;
+package com.ficha.Entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "resistencia")
-public class Resistencia {
+@Table(name = "protecao")
+public class Protecao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_res")
-    private Integer idRes;
+    @Column(name = "id_protecao")
+    private Integer idProtecao;
 
     @Column(name = "descricao", nullable = false, length = 150, unique = true)
     private String descricao;
 
-    public Integer getIdRes() {
-        return idRes;
+    public Integer getIdProtecao() {
+        return idProtecao;
     }
 
-    public void setIdRes(Integer idRes) {
-        this.idRes = idRes;
+    public void setIdProtecao(Integer idProtecao) {
+        this.idProtecao = idProtecao;
     }
 
     public String getDescricao() {
