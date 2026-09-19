@@ -3,24 +3,23 @@ package com.ficha.ficha.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "atributo")
-public class Atributo {
+@Table(name = "proficiencia")
+public class Proficiencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_atri")
-    private Integer idAtri;
+    @Column(name = "id_proe")
+    private Integer idProe;
 
-    @Column(name = "descricao", nullable = false, length = 50, unique = true)
+    @Column(name = "descricao", length = 150, nullable = false, unique = true)
     private String descricao;
 
-
-    public Integer getIdAtri() {
-        return idAtri;
+    public Integer getIdProe() {
+        return idProe;
     }
 
-    public void setIdAtri(Integer idAtri) {
-        this.idAtri = idAtri;
+    public void setIdProe(Integer idProe) {
+        this.idProe = idProe;
     }
 
     public String getDescricao() {
