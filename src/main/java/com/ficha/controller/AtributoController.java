@@ -5,7 +5,10 @@ import com.ficha.service.AtributoService;
 import com.ficha.dto.request.AtributoDtoRequest;
 import com.ficha.dto.response.AtributoDtoResponse;
 import com.ficha.repository.AtributoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,20 +17,20 @@ import java.util.List;
 @RequestMapping("/atributos")
 public class AtributoController {
 
-    @Autowired
-    private AtributoRepository atributoRepository;
+    private final AtributoService atributoService;
 
-    @Autowired
-    private AtributoService atributoService;
-
-    @PostMapping("/criar")
-    public AtributoDtoResponse criarAtributo(@RequestBody AtributoDtoRequest request){
-        return atributoService.criarAtributo(request);
+    public AtributoController(AtributoService atributoService) {
+        this.atributoService = atributoService;
     }
 
-    @GetMapping("/listar")
-    public List<Atributo> list(){
-        return atributoService.listar();
+    @PostMapping
+    public ResponseEntity<AtributoDtoResponse> criarAtributo(@Valid @RequestBody AtributoDtoRequest request) {
+        AtributoDtoResponse response = atributoService.criarAtributo(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping
+    public ResponseEntity<List<AtributoDtoResponse>> listar() {
+        return ResponseEntity.ok(atributoService.listar());
+    }
 }

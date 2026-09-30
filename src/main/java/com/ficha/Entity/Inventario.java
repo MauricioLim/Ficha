@@ -46,6 +46,7 @@ public class Inventario {
     }
 
     public void setPesoLimite(BigDecimal pesoLimite) {
+
         this.pesoLimite = pesoLimite;
     }
 
