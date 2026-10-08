@@ -3,7 +3,8 @@ package com.ficha.service;
 import com.ficha.Entity.Atributo;
 import com.ficha.dto.request.AtributoDtoRequest;
 import com.ficha.dto.response.AtributoDtoResponse;
-import com.ficha.exception.atributo.AtributoDuplicadoException;
+import com.ficha.exception.ConflitoException;
+import com.ficha.exception.RecursoNaoEncontradoException;
 import com.ficha.repository.AtributoRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +26,11 @@ public class AtributoService {
         String descricao = request.getDescricao().trim();
 
         if (atributoRepository.existsByDescricaoIgnoreCase(descricao)){
-            throw new AtributoDuplicadoException(descricao);
+            throw new ConflitoException("Atributo " + descricao + " já cadastrado");
         }
 
         Atributo atri = new Atributo();
-        atri.setDescricao(request.getDescricao());
+        atri.setDescricao(descricao);
 
         atri = atributoRepository.save(atri);
 
@@ -39,11 +40,17 @@ public class AtributoService {
     @Transactional(readOnly = true)
     public List<AtributoDtoResponse> listar(){
         return atributoRepository.findAll().stream()
-                .map(atri -> new AtributoDtoResponse(atri.getIdAtri(), atri.getDescricao()))
+                .map(this::toResponse)
                 .toList();
     }
 
     private AtributoDtoResponse toResponse(Atributo atri) {
         return new AtributoDtoResponse(atri.getIdAtri(), atri.getDescricao());
+    }
+
+    @Transactional
+    public void deletar(Integer id){
+        Atributo atributo = atributoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("atributo " + id + " não encontrado"));
+        atributoRepository.delete(atributo);
     }
 }

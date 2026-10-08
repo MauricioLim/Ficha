@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProficienciaRepository extends JpaRepository<Proficiencia, Integer> {
+    boolean existsByDescricaoIgnoreCase(String descricao);
 }

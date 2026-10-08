@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResistenciaRepository extends JpaRepository<Resistencia, Integer> {
-
+    boolean existsByDescricaoIgnoreCase(String descricao);
 }

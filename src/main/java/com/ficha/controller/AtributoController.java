@@ -33,4 +33,11 @@ public class AtributoController {
     public ResponseEntity<List<AtributoDtoResponse>> listar() {
         return ResponseEntity.ok(atributoService.listar());
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Integer id){
+        atributoService.deletar(id);
+    }
+
 }

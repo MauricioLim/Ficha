@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProtecaoRepository extends JpaRepository<Protecao, Integer> {
+    boolean existsByDescricaoIgnoreCase(String descricao);
 }
