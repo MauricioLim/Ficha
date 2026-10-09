@@ -1,6 +1,8 @@
 package com.ficha.controller;
 
+import com.ficha.dto.request.AtributoDtoRequest;
 import com.ficha.dto.request.ProficienciaDtoRequest;
+import com.ficha.dto.response.AtributoDtoResponse;
 import com.ficha.dto.response.ProficienciaDtoResponse;
 import com.ficha.service.ProficienciaService;
 import jakarta.validation.Valid;
@@ -35,5 +37,15 @@ public class ProficienciaController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Integer id){
         proficienciaService.deletar(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProficienciaDtoResponse> atualizar(@PathVariable Integer id, @Valid @RequestBody ProficienciaDtoRequest request){
+        return ResponseEntity.ok(proficienciaService.atualizarProficiencia(id, request));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProficienciaDtoResponse> buscarPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(proficienciaService.buscarPorId(id));
     }
 }

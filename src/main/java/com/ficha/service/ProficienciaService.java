@@ -1,9 +1,12 @@
 package com.ficha.service;
 
 import com.ficha.Entity.Atributo;
+import com.ficha.Entity.Item;
 import com.ficha.Entity.Proficiencia;
+import com.ficha.dto.request.ItemDtoRequest;
 import com.ficha.dto.request.ProficienciaDtoRequest;
 import com.ficha.dto.response.AtributoDtoResponse;
+import com.ficha.dto.response.ItemDtoResponse;
 import com.ficha.dto.response.ProficienciaDtoResponse;
 import com.ficha.exception.ConflitoException;
 import com.ficha.exception.RecursoNaoEncontradoException;
@@ -51,7 +54,24 @@ public class ProficienciaService {
 
     @Transactional
     public void deletar(Integer id){
-        Proficiencia proficiencia = proficienciaRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Proficiencia " + id + " não encontrado"));
+        Proficiencia proficiencia = buscarEntidade(id);
         proficienciaRepository.delete(proficiencia);
+    }
+
+    private Proficiencia buscarEntidade(Integer id) {
+        return proficienciaRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Proficiencia " + id + " não encontrado"));
+    }
+
+    @Transactional(readOnly = true)
+    public ProficienciaDtoResponse buscarPorId(Integer id) {
+        return toResponse(buscarEntidade(id));
+    }
+
+    @Transactional
+    public ProficienciaDtoResponse atualizarProficiencia(Integer id, ProficienciaDtoRequest request) {
+        Proficiencia proficiencia= buscarEntidade(id);
+        proficiencia.setDescricao(request.getDescricao());
+        return toResponse(proficiencia);
     }
 }

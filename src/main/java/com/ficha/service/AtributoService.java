@@ -1,8 +1,11 @@
 package com.ficha.service;
 
 import com.ficha.Entity.Atributo;
+import com.ficha.Entity.Item;
 import com.ficha.dto.request.AtributoDtoRequest;
+import com.ficha.dto.request.ItemDtoRequest;
 import com.ficha.dto.response.AtributoDtoResponse;
+import com.ficha.dto.response.ItemDtoResponse;
 import com.ficha.exception.ConflitoException;
 import com.ficha.exception.RecursoNaoEncontradoException;
 import com.ficha.repository.AtributoRepository;
@@ -50,7 +53,24 @@ public class AtributoService {
 
     @Transactional
     public void deletar(Integer id){
-        Atributo atributo = atributoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("atributo " + id + " não encontrado"));
+        Atributo atributo = buscarEntidade(id);
         atributoRepository.delete(atributo);
+    }
+
+    private Atributo buscarEntidade(Integer id) {
+        return atributoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Item " + id + " não encontrado"));
+    }
+
+    @Transactional(readOnly = true)
+    public AtributoDtoResponse buscarPorId(Integer id) {
+        return toResponse(buscarEntidade(id));
+    }
+
+    @Transactional
+    public AtributoDtoResponse atualizarAtributo(Integer id, AtributoDtoRequest request) {
+        Atributo atributo = buscarEntidade(id);
+        atributo.setDescricao(request.getDescricao());
+        return toResponse(atributo);
     }
 }

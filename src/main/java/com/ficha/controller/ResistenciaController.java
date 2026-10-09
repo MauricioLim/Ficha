@@ -40,5 +40,15 @@ public class ResistenciaController {
         resistenciaService.deletar(id);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResistenciaDtoResponse> buscarPorId(@PathVariable Integer id){
+        return ResponseEntity.ok(resistenciaService.buscarPorId(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResistenciaDtoResponse> atualizar(@PathVariable Integer id, @RequestBody ResistenciaDtoRequest request){
+        return ResponseEntity.ok(resistenciaService.atualizarResistencia(id, request));
+    }
+
 
 }

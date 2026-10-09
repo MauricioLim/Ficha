@@ -37,4 +37,14 @@ public class ProtecaoController {
     public void deletar(@PathVariable Integer id){
         protecaoService.deletar(id);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProtecaoDtoResponse> buscarPorId(@PathVariable Integer id){
+        return ResponseEntity.ok(protecaoService.buscaPorId(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProtecaoDtoResponse> atualizar(@PathVariable Integer id, @RequestBody ProtecaoDtoRequest request){
+        return ResponseEntity.ok(protecaoService.atualizarProtecao(id, request));
+    }
 }

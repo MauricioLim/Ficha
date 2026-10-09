@@ -50,7 +50,24 @@ public class ProtecaoService {
 
     @Transactional
     public void deletar(Integer id){
-        Protecao protecao = protecaoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Protecao " + id + " não encontrado"));
+        Protecao protecao = buscarEntidade(id);
         protecaoRepository.delete(protecao);
+    }
+
+    private Protecao buscarEntidade(Integer id){
+        return protecaoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Proteção " + id + " não encontrado"));
+    }
+
+    @Transactional(readOnly = true)
+    public ProtecaoDtoResponse buscaPorId(Integer id){
+        return buscaPorId(id);
+    }
+
+    @Transactional
+    public ProtecaoDtoResponse atualizarProtecao(Integer id, ProtecaoDtoRequest request){
+        Protecao protecao = buscarEntidade(id);
+        protecao.setDescricao(request.getDescricao());
+
+        return toResponse(protecao);
     }
 }

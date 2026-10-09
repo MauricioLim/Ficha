@@ -52,7 +52,25 @@ public class ResistenciaService {
 
     @Transactional
     public void deletar(Integer id){
-        Resistencia resistencia = resistenciaRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Resistencia " + id + " não encontrado"));
+        Resistencia resistencia = buscarEntidade(id);
         resistenciaRepository.delete(resistencia);
+    }
+
+
+    public Resistencia buscarEntidade(Integer id){
+        return resistenciaRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Resistencia " + id + " não encontrado"));
+    }
+
+    @Transactional
+    public ResistenciaDtoResponse buscarPorId(Integer id){
+        return toResponse(buscarEntidade(id));
+    }
+
+    @Transactional
+    public ResistenciaDtoResponse atualizarResistencia(Integer id, ResistenciaDtoRequest request){
+        Resistencia resistencia = buscarEntidade(id);
+        resistencia.setDescricao(request.getDescricao());
+
+        return toResponse(resistencia);
     }
 }
